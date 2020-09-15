@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using IniParser.Exception;
 
@@ -31,36 +30,22 @@ namespace IniParser.Model
 
         public int GetInt(string key)
         {
-            var property = GetProperty(key);
-            
-            if (property.Type != ValueType.Int)
+            if (TryGetInt(key, out var value))
+                return value;
+
+            if (_data.TryGetValue(key, out var property)) 
                 throw new TypeMismatchException(ValueType.Int, property.Type);
-            
-            try
-            {
-                return ((IntProperty) property).Value;
-            }
-            catch (InvalidCastException ex)
-            {
-                throw new TypeMismatchException(ex);
-            }
+            throw new PropertyNotFoundException(key);
         }
 
         public double GetDouble(string key)
         {
-            var property = GetProperty(key);
-            
-            if (property.Type != ValueType.Double)
-                throw new TypeMismatchException(ValueType.Double, property.Type);
+            if (TryGetDouble(key, out var value))
+                return value;
 
-            try
-            {
-                return ((DoubleProperty) property).Value;
-            }
-            catch (InvalidCastException ex)
-            {
-                throw new TypeMismatchException(ex);
-            }
+            if (_data.TryGetValue(key, out var property)) 
+                throw new TypeMismatchException(ValueType.Double, property.Type);
+            throw new PropertyNotFoundException(key);
         }
 
         public string GetString(string key) => 
@@ -68,44 +53,38 @@ namespace IniParser.Model
 
         public bool TryGetInt(string key, out int value)
         {
-            try
+            if (_data.TryGetValue(key, out var property) && property is IntProperty intProperty)
             {
-                value = GetInt(key);
+                value = intProperty.Value;
                 return true;
             }
-            catch (ParserException)
-            {
-                value = new int();
-                return false;
-            }
+
+            value = default;
+            return false;
         }
 
         public bool TryGetDouble(string key, out double value)
         {
-            try
+            if (_data.TryGetValue(key, out var property) && property is DoubleProperty doubleProperty)
             {
-                value = GetDouble(key);
+                value = doubleProperty.Value;
                 return true;
             }
-            catch (ParserException)
-            {
-                value = new int();
-                return false;
-            }
+
+            value = default;
+            return false;
         }
 
         public bool TryGetString(string key, out string value)
         {
-            try
+            if (_data.TryGetValue(key, out var property))
             {
-                value = GetString(key);
+                value = property.GetStringValue();
                 return true;
             }
-            catch (ParserException)
-            {
-                value = string.Empty;
-                return false;
-            }
+
+            value = default;
+            return false;
         }
 
         public void AddProperty(string key, string value) =>
