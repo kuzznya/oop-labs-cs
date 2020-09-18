@@ -4,8 +4,8 @@ namespace IniParser.Exception
 {
     public class TypeMismatchException : ParserException
     {
-        public TypeMismatchException(ValueType expected, ValueType actual)
-            : base($"{nameof(expected)} expected, but was {nameof(actual)}") { }
+        public TypeMismatchException(string expected, string actual)
+            : base($"{expected} expected, but was {actual}") { }
 
         public TypeMismatchException()
             : base("Property type mismatch") { }

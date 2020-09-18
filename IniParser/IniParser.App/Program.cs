@@ -8,6 +8,12 @@ namespace IniParser.App
     {
         static void Main(string[] args)
         {
+            if (args.Length < 3 || args.Length > 4)
+            {
+                Console.Error.WriteLine("Invalid args count");
+                return;
+            }
+            
             var parser = new IniParser();
 
             try
@@ -15,7 +21,27 @@ namespace IniParser.App
                 var data = parser.Parse(args[0]);
 
                 var property = data.Section(args[1]).GetProperty(args[2]);
-                Console.WriteLine($"[{args[1]}]: {args[2]} = {property.GetStringValue()} ({property.Type})");
+                
+                if (args.Length == 3)
+                    Console.WriteLine($"{property.GetStringValue()} ({property.Type})");
+                else
+                {
+                    switch (args[3])
+                    {
+                        case "int":
+                            Console.WriteLine($"{data.Section(args[1]).GetInt(args[2])}");
+                            break;
+                        case "double":
+                            Console.WriteLine($"{data.Section(args[1]).GetDouble(args[2])}");
+                            break;
+                        case "string":
+                            Console.WriteLine($"{data.Section(args[1]).GetString(args[2])}");
+                            break;
+                        default:
+                            Console.Error.WriteLine("Invalid type");
+                            break;
+                    }
+                }
             }
             catch (FileNotFoundException)
             {

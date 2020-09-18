@@ -40,7 +40,6 @@ namespace IniParser.Tests.Model
         [Test]
         public void GetDouble_WhenNotDouble_ThrowTypeMisMatchException()
         {
-            Assert.Throws<TypeMismatchException>(() => _section.GetDouble("int"));
             Assert.Throws<TypeMismatchException>(() => _section.GetDouble("str"));
         }
 

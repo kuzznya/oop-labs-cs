@@ -34,7 +34,7 @@ namespace IniParser.Model
                 return value;
 
             if (_data.TryGetValue(key, out var property)) 
-                throw new TypeMismatchException(ValueType.Int, property.Type);
+                throw new TypeMismatchException("int", property.Type.ToString());
             throw new PropertyNotFoundException(key);
         }
 
@@ -44,7 +44,7 @@ namespace IniParser.Model
                 return value;
 
             if (_data.TryGetValue(key, out var property)) 
-                throw new TypeMismatchException(ValueType.Double, property.Type);
+                throw new TypeMismatchException("double", property.Type.ToString());
             throw new PropertyNotFoundException(key);
         }
 
@@ -65,10 +65,17 @@ namespace IniParser.Model
 
         public bool TryGetDouble(string key, out double value)
         {
-            if (_data.TryGetValue(key, out var property) && property is DoubleProperty doubleProperty)
+            if (_data.TryGetValue(key, out var property))
             {
-                value = doubleProperty.Value;
-                return true;
+                switch (property)
+                {
+                    case DoubleProperty doubleProperty:
+                        value = doubleProperty.Value;
+                        return true;
+                    case IntProperty intProperty:
+                        value = intProperty.Value;
+                        return true;
+                }
             }
 
             value = default;
