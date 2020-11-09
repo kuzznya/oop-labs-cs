@@ -68,12 +68,15 @@ namespace RaceSimulator.Races
             Status = RaceStatus.Finished;
         }
 
-        public RaceResult<T> GetWinnerResult()
+        public RaceResult<T> WinnerResult
         {
-            if (Status == RaceStatus.Open)
-                throw new InvalidOperationException("Race is not finished");
+            get
+            {
+                if (Status == RaceStatus.Open)
+                    throw new InvalidOperationException("Race is not finished");
 
-            return Results[0];
+                return Results[0];
+            }
         }
     }
 

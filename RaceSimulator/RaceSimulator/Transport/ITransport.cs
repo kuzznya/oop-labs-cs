@@ -2,8 +2,8 @@ namespace RaceSimulator.Transport
 {
     public interface ITransport
     {
-        public string GetName();
-        public double GetSpeed();
+        string Name { get; }
+        double Speed { get; }
         public double GetRaceTime(int distance);
     }
 }

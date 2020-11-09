@@ -22,9 +22,9 @@ namespace RaceSimulator
             var idx = 1;
             foreach (var result in race.Results)
             {
-                Console.WriteLine($"{idx++}: {result.Vehicle.GetName()} - {result.Time}");
+                Console.WriteLine($"{idx++}: {result.Vehicle.Name} - {result.Time}");
             }
-            Console.WriteLine($"Winner: {race.GetWinnerResult().Vehicle.GetName()}");
+            Console.WriteLine($"Winner: {race.WinnerResult.Vehicle.Name}");
             Console.WriteLine();
             
             var groundRace = new GroundRace(100000);
@@ -32,7 +32,7 @@ namespace RaceSimulator
             groundRace.RegisterVehicle(new FastCamel());
             groundRace.RegisterVehicle(new BactrianCamel());
             groundRace.Start();
-            Console.WriteLine($"Ground race winner: {groundRace.GetWinnerResult().Vehicle.GetName()}");
+            Console.WriteLine($"Ground race winner: {groundRace.WinnerResult.Vehicle.Name}");
         }
     }
 }

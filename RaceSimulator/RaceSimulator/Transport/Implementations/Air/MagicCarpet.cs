@@ -2,9 +2,9 @@ namespace RaceSimulator.Transport.Implementations.Air
 {
     public class MagicCarpet : AirTransport
     {
-        public override string GetName() => "Magic carpet";
+        public override string Name => "Magic carpet";
 
-        public override double GetSpeed() => 10.0;
+        public override double Speed => 10.0;
 
         protected override double GetDistanceReducer(int distance)
         {

@@ -2,11 +2,11 @@ namespace RaceSimulator.Transport.Implementations.Ground
 {
     public class FastCamel : GroundTransport
     {
-        public override string GetName() => "Fast camel";
+        public override string Name => "Fast camel";
 
-        public override double GetSpeed() => 40.0;
+        public override double Speed => 40.0;
 
-        protected override double GetActivityTime() => 10.0;
+        protected override double ActivityTime => 10.0;
 
         protected override double GetRestDuration(int restIndex)
         {
