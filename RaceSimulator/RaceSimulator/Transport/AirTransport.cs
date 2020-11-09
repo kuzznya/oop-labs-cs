@@ -8,7 +8,7 @@ namespace RaceSimulator.Transport
         
         public double GetRaceTime(int distance)
         {
-            return GetSpeed() * distance * (1.0 - GetDistanceReducer(distance));
+            return distance * (1.0 - GetDistanceReducer(distance)) / GetSpeed();
         }
     }
 }

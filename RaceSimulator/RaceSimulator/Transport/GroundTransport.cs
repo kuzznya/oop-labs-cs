@@ -9,11 +9,11 @@ namespace RaceSimulator.Transport
 
         public double GetRaceTime(int distance)
         {
-            var restCount = (int) ((double) distance / GetSpeed() / GetActivityTime());
+            var restCount = (int) (distance / GetSpeed() / GetActivityTime());
             double totalRestTime = 0;
             for (var i = 0; i < restCount; i++)
                 totalRestTime += GetRestDuration(i);
-            return (double) distance / GetSpeed() + totalRestTime;
+            return distance / GetSpeed() + totalRestTime;
         }
     }
 }
