@@ -4,13 +4,13 @@ using Backups.Models.ObjectDelta;
 
 namespace Backups.Models
 {
-    public class ObjectDiff
+    public class FileDiff
     {
         public BackupFile BaseFile { get; }
         
-        public List<IObjectDelta> Changes { get; }
+        public List<IFileDelta> Changes { get; }
 
-        public ObjectDiff(BackupFile baseFile, List<IObjectDelta> changes)
+        public FileDiff(BackupFile baseFile, List<IFileDelta> changes)
         {
             BaseFile = baseFile;
             Changes = changes;

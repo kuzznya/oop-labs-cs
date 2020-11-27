@@ -8,7 +8,7 @@ namespace Backups.Models.RestorePoint
     public class IncrementalRestorePoint : IRestorePoint
     {
         private readonly IRestorePoint _previousPoint;
-        private readonly List<ObjectDiff> _diffs = new List<ObjectDiff>();
+        private readonly List<FileDiff> _diffs = new List<FileDiff>();
         
         public DateTime CreationTime { get; }
 

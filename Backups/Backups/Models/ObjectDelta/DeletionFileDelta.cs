@@ -3,12 +3,12 @@ using System.Linq;
 
 namespace Backups.Models.ObjectDelta
 {
-    public class DeletionObjectDelta : IObjectDelta
+    public class DeletionFileDelta : IFileDelta
     {
         private readonly int _position;
         private readonly int _length;
         
-        public DeletionObjectDelta(int position, int length)
+        public DeletionFileDelta(int position, int length)
         {
             _position = position;
             _length = length;

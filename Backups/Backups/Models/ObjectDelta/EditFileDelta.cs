@@ -2,13 +2,13 @@ using System;
 
 namespace Backups.Models.ObjectDelta
 {
-    public class EditObjectDelta : IObjectDelta
+    public class EditFileDelta : IFileDelta
     {
         private readonly int _start;
         private readonly int _end;
         private readonly byte[] _edit;
         
-        public EditObjectDelta(int start, int end, byte[] edit)
+        public EditFileDelta(int start, int end, byte[] edit)
         {
             _start = start;
             _end = end;

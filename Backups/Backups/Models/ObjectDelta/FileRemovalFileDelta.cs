@@ -1,6 +1,6 @@
 namespace Backups.Models.ObjectDelta
 {
-    public class FileRemovalObjectDelta : IObjectDelta
+    public class FileRemovalFileDelta : IFileDelta
     {
         public int Size => 0;
 

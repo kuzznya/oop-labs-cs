@@ -24,13 +24,13 @@ namespace Backups.Models
             File.WriteAllBytes(Path, Data.ToArray());
         }
 
-        public ObjectDiff CompareTo(BackupFile previousFile)
+        public FileDiff CompareTo(BackupFile previousFile)
         {
             if (Data.IsEmpty && !previousFile.Data.IsEmpty)
-                return new ObjectDiff(previousFile, 
-                    new List<IObjectDelta> {new FileRemovalObjectDelta()});
+                return new FileDiff(previousFile, 
+                    new List<IFileDelta> {new FileRemovalFileDelta()});
 
-            var deltas = new List<IObjectDelta>();
+            var deltas = new List<IFileDelta>();
             
             var obj = previousFile;
             while (true)
@@ -42,13 +42,13 @@ namespace Backups.Models
                 obj = delta.Apply(obj);
             }
             
-            return new ObjectDiff(previousFile, deltas);
+            return new FileDiff(previousFile, deltas);
         }
 
-        private IObjectDelta FindClosestDelta(BackupFile previousFile)
+        private IFileDelta FindClosestDelta(BackupFile previousFile)
         {
             if (Data.IsEmpty && !previousFile.Data.IsEmpty)
-                return new FileRemovalObjectDelta();
+                return new FileRemovalFileDelta();
 
             if (Data.SequenceEqual(previousFile.Data))
                 return null;
@@ -67,11 +67,11 @@ namespace Backups.Models
             }
             
             if (deltaCurrentStart == Data.Length)
-                return new DeletionObjectDelta(deltaCurrentStart, 
+                return new DeletionFileDelta(deltaCurrentStart, 
                     previousFile.Data.Length - deltaCurrentStart);
             
             if (deltaPreviousStart == previousFile.Data.Length)
-                return new AdditionObjectDelta(deltaPreviousStart, 
+                return new AdditionFileDelta(deltaPreviousStart, 
                     Data.TakeLast(Data.Length - deltaPreviousStart).ToArray());
 
             while (deltaCurrentEnd < Data.Length &&
@@ -82,7 +82,7 @@ namespace Backups.Models
                 deltaPreviousEnd++;
             }
 
-            return new EditObjectDelta(
+            return new EditFileDelta(
                 deltaPreviousStart,
                 deltaPreviousEnd,
                 Data

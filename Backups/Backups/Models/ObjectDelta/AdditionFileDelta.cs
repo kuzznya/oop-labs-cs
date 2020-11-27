@@ -2,12 +2,12 @@ using System;
 
 namespace Backups.Models.ObjectDelta
 {
-    public class AdditionObjectDelta : IObjectDelta
+    public class AdditionFileDelta : IFileDelta
     {
         private readonly int _position;
         private readonly byte[] _addition;
         
-        public AdditionObjectDelta(int position, byte[] addition)
+        public AdditionFileDelta(int position, byte[] addition)
         {
             _position = position;
             _addition = addition;
