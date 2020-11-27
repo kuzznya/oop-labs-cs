@@ -4,7 +4,7 @@ using System.Linq;
 using Backups.Models.RestorePoint;
 using Backups.Utils;
 
-namespace Backups.Algorithms.Cleaners
+namespace Backups.Cleaners
 {
     public class DateCleaner : ICleaner
     {

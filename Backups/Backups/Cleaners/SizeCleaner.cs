@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Backups.Models.RestorePoint;
 
-namespace Backups.Algorithms.Cleaners
+namespace Backups.Cleaners
 {
     public class SizeCleaner : ICleaner
     {

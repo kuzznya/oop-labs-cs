@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using Backups.Algorithms.Cleaners;
 using Backups.Algorithms.StorageManagers;
+using Backups.Cleaners;
 using Backups.Models.RestorePoint;
 
 namespace Backups.Models
