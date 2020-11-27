@@ -1,4 +1,4 @@
-namespace Backups.Algorithms.StorageManagers
+namespace Backups.StorageManagers
 {
     public interface IStorageManager
     {
