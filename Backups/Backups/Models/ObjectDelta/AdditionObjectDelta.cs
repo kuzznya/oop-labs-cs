@@ -12,7 +12,9 @@ namespace Backups.Models.ObjectDelta
             _position = position;
             _addition = addition;
         }
-        
+
+        public int Size => _addition.Length + 4;
+
         public BackupObject Apply(BackupObject obj)
         {
             var data = new byte[obj.Data.Length + _addition.Length];

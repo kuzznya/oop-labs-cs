@@ -17,6 +17,8 @@ namespace Backups.Models.RestorePoint
             .Concat(_diffs.Select(diff => diff.Apply()))
             .ToImmutableList();
 
+        public int Size => _diffs.Sum(diff => diff.Changes.Sum(delta => delta.Size));
+
         public IncrementalRestorePoint(
             IRestorePoint previousPoint, 
             IEnumerable<BackupObject> objects, 

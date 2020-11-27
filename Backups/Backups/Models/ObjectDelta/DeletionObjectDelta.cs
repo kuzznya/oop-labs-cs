@@ -13,7 +13,9 @@ namespace Backups.Models.ObjectDelta
             _position = position;
             _length = length;
         }
-        
+
+        public int Size => 4 * 2;
+
         public BackupObject Apply(BackupObject obj)
         {
             if (_position > obj.Data.Length)

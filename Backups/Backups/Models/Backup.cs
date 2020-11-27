@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Backups.Algorithms.Cleaners;
 using Backups.Algorithms.StorageManagers;
+using Backups.Models.RestorePoint;
 
 namespace Backups.Models
 {
@@ -9,7 +10,7 @@ namespace Backups.Models
         private IStorageManager _storageManager;
         private ICleaner _cleaner;
 
-        IReadOnlyList<RestorePoint.IRestorePoint> RestorePoints { get; }
+        IReadOnlyList<IRestorePoint> RestorePoints { get; }
 
         public Backup(IStorageManager storageManager, ICleaner cleaner)
         {

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Backups.Models.RestorePoint
 {
@@ -7,6 +8,7 @@ namespace Backups.Models.RestorePoint
     {
         public DateTime CreationTime { get; }
         public IReadOnlyList<BackupObject> SavedObjects { get; }
+        public int Size => SavedObjects.Sum(obj => obj.Data.Length);
 
         public CompleteRestorePoint(DateTime creationTime, IReadOnlyList<BackupObject> objects)
         {
