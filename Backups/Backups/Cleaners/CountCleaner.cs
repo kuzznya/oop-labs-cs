@@ -13,10 +13,13 @@ namespace Backups.Cleaners
             _count = count;
         }
 
-        public List<IRestorePoint> FilterRestorePoints(IEnumerable<IRestorePoint> points) =>
-            points
+        public List<IRestorePoint> FilterRestorePoints(IEnumerable<IRestorePoint> points)
+        {
+            var count = 0;
+            return points
                 .OrderByDescending(point => point.CreationTime)
-                .TakeLast(_count)
+                .Where(point => count++ >= _count && !(point is IncrementalRestorePoint))
                 .ToList();
+        }
     }
 }

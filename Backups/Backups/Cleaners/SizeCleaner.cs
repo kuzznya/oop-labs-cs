@@ -23,7 +23,7 @@ namespace Backups.Cleaners
 
             foreach (var point in sortedPoints)
             {
-                if (size + point.Size <= _sizeBytes) 
+                if (size + point.Size <= _sizeBytes || point is IncrementalRestorePoint) 
                 {
                     result.Add(point);
                     size += point.Size;
