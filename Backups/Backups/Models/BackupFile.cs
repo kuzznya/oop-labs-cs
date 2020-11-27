@@ -19,12 +19,6 @@ namespace Backups.Models
             Data = data.ToImmutableArray();
         }
 
-        public BackupFile(string path, string backupPath)
-        {
-            Path = path;
-            Data = File.ReadAllBytes(backupPath).ToImmutableArray();
-        }
-
         public void Restore()
         {
             File.WriteAllBytes(Path, Data.ToArray());
