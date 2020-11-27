@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using Backups.Models.ObjectDelta;
+using Backups.Models.FileDelta;
 
 namespace Backups.Models
 {

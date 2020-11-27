@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
-using Backups.Models.ObjectDelta;
+using Backups.Models.FileDelta;
 
 namespace Backups.Models
 {
@@ -17,6 +17,12 @@ namespace Backups.Models
         {
             Path = path;
             Data = data.ToImmutableArray();
+        }
+
+        public BackupFile(string path, string backupPath)
+        {
+            Path = path;
+            Data = File.ReadAllBytes(backupPath).ToImmutableArray();
         }
 
         public void Restore()

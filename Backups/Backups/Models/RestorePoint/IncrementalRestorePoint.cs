@@ -12,7 +12,7 @@ namespace Backups.Models.RestorePoint
         
         public DateTime CreationTime { get; }
 
-        public IReadOnlyList<BackupFile> SavedObjects => _previousPoint.SavedObjects
+        public IReadOnlyList<BackupFile> SavedFiles => _previousPoint.SavedFiles
             .Where(obj => _diffs.Find(diff => diff.BaseFile == obj) is null)
             .Concat(_diffs.Select(diff => diff.Apply()))
             .ToImmutableList();
@@ -27,7 +27,7 @@ namespace Backups.Models.RestorePoint
             _previousPoint = previousPoint;
             CreationTime = creationTime;
 
-            var previousObjects = previousPoint.SavedObjects;
+            var previousObjects = previousPoint.SavedFiles;
             foreach (var obj in objects)
             {
                 var prevObj = previousObjects.FirstOrDefault(o => o.Path == obj.Path);
@@ -39,7 +39,7 @@ namespace Backups.Models.RestorePoint
         
         public void Restore()
         {
-            foreach (var backupObject in SavedObjects) 
+            foreach (var backupObject in SavedFiles) 
                 backupObject.Restore();
         }
     }

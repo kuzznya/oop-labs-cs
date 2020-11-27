@@ -1,4 +1,4 @@
-namespace Backups.Models.ObjectDelta
+namespace Backups.Models.FileDelta
 {
     public class FileRemovalFileDelta : IFileDelta
     {

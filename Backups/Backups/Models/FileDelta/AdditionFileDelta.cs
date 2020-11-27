@@ -1,6 +1,6 @@
 using System;
 
-namespace Backups.Models.ObjectDelta
+namespace Backups.Models.FileDelta
 {
     public class AdditionFileDelta : IFileDelta
     {

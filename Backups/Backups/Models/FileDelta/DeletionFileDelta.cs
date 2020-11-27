@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 
-namespace Backups.Models.ObjectDelta
+namespace Backups.Models.FileDelta
 {
     public class DeletionFileDelta : IFileDelta
     {
