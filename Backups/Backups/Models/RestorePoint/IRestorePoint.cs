@@ -9,5 +9,6 @@ namespace Backups.Models.RestorePoint
         public DateTime CreationTime { get; }
         public IReadOnlyList<BackupObject> SavedObjects { get; }
         public int Size { get; }
+        public void Restore();
     }
 }

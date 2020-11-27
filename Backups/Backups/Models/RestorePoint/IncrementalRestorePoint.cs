@@ -36,5 +36,11 @@ namespace Backups.Models.RestorePoint
                     : obj.CompareTo(new BackupObject(obj.Path, new byte[0])));
             }
         }
+        
+        public void Restore()
+        {
+            foreach (var backupObject in SavedObjects) 
+                backupObject.Restore();
+        }
     }
 }

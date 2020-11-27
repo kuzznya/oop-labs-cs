@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.IO;
 using System.Linq;
 using Backups.Models.ObjectDelta;
 
@@ -16,6 +17,11 @@ namespace Backups.Models
         {
             Path = path;
             Data = data.ToImmutableArray();
+        }
+
+        public void Restore()
+        {
+            File.WriteAllBytes(Path, Data.ToArray());
         }
 
         public ObjectDiff CompareTo(BackupObject previousObject)
