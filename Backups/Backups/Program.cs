@@ -13,7 +13,7 @@ namespace Backups
         static void Main(string[] args)
         {
             IBackupRepository backupRepository = new PlainBackupRepository();
-            IPointCreator pointCreator = new MixedPointCreator();
+            IPointCreator pointCreator = new MixedPointCreator(new FileReader());
             ICleaner cleaner = new CountCleaner(5);
             IDateTimeProvider dateTimeProvider = new DateTimeProvider();
             

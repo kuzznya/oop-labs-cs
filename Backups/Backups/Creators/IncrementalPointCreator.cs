@@ -8,7 +8,15 @@ namespace Backups.Creators
 {
     public class IncrementalPointCreator : IPointCreator
     {
-        private readonly CompletePointCreator _completePointCreator = new CompletePointCreator();
+        private readonly CompletePointCreator _completePointCreator;
+
+        private readonly IFileReader _reader;
+
+        public IncrementalPointCreator(IFileReader reader)
+        {
+            _reader = reader;
+            _completePointCreator = new CompletePointCreator(reader);
+        }
         
         public IRestorePoint Create(Backup backup, DateTime currentTime)
         {
@@ -16,7 +24,7 @@ namespace Backups.Creators
                 return _completePointCreator.Create(backup, currentTime);
 
             var objects = backup.FilePaths
-                .Select(path => new BackupFile(path, File.ReadAllBytes(path)))
+                .Select(path => _reader.Read(path))
                 .ToList();
 
             return new IncrementalRestorePoint(backup.RestorePoints.Last(), objects, currentTime);
