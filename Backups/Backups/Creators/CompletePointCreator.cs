@@ -11,7 +11,7 @@ namespace Backups.Creators
         public IRestorePoint Create(Backup backup, DateTime currentTime)
         {
             var objects = backup.FilePaths
-                .Select(path => new BackupObject(path, File.ReadAllBytes(path)))
+                .Select(path => new BackupFile(path, File.ReadAllBytes(path)))
                 .ToList();
 
             return new CompleteRestorePoint(currentTime, objects);

@@ -16,7 +16,7 @@ namespace Backups.Creators
                 return _completePointCreator.Create(backup, currentTime);
 
             var objects = backup.FilePaths
-                .Select(path => new BackupObject(path, File.ReadAllBytes(path)))
+                .Select(path => new BackupFile(path, File.ReadAllBytes(path)))
                 .ToList();
 
             return new IncrementalRestorePoint(backup.RestorePoints.Last(), objects, currentTime);

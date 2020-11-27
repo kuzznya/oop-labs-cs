@@ -17,7 +17,7 @@ namespace Backups.Models.ObjectDelta
 
         public int Size => _edit.Length + 4 * 2;
 
-        public BackupObject Apply(BackupObject obj)
+        public BackupFile Apply(BackupFile obj)
         {
             if (_start >= obj.Data.Length)
                 throw new ArgumentException("Backup object data length is less than object delta position");
@@ -33,7 +33,7 @@ namespace Backups.Models.ObjectDelta
             for (var i = _end; i < obj.Data.Length; i++)
                 data[i] = obj.Data[i];
 
-            return new BackupObject(obj.Path, data);
+            return new BackupFile(obj.Path, data);
         }
     }
 }

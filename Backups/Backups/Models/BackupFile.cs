@@ -6,14 +6,14 @@ using Backups.Models.ObjectDelta;
 
 namespace Backups.Models
 {
-    public class BackupObject
+    public class BackupFile
     {
         public string Path { get; }
         public ImmutableArray<byte> Data { get; }
         
         public bool IsDeleted => Data.IsEmpty;
 
-        public BackupObject(string path, IEnumerable<byte> data)
+        public BackupFile(string path, IEnumerable<byte> data)
         {
             Path = path;
             Data = data.ToImmutableArray();
@@ -24,15 +24,15 @@ namespace Backups.Models
             File.WriteAllBytes(Path, Data.ToArray());
         }
 
-        public ObjectDiff CompareTo(BackupObject previousObject)
+        public ObjectDiff CompareTo(BackupFile previousFile)
         {
-            if (Data.IsEmpty && !previousObject.Data.IsEmpty)
-                return new ObjectDiff(previousObject, 
+            if (Data.IsEmpty && !previousFile.Data.IsEmpty)
+                return new ObjectDiff(previousFile, 
                     new List<IObjectDelta> {new FileRemovalObjectDelta()});
 
             var deltas = new List<IObjectDelta>();
             
-            var obj = previousObject;
+            var obj = previousFile;
             while (true)
             {
                 var delta = FindClosestDelta(obj);
@@ -42,15 +42,15 @@ namespace Backups.Models
                 obj = delta.Apply(obj);
             }
             
-            return new ObjectDiff(previousObject, deltas);
+            return new ObjectDiff(previousFile, deltas);
         }
 
-        private IObjectDelta FindClosestDelta(BackupObject previousObject)
+        private IObjectDelta FindClosestDelta(BackupFile previousFile)
         {
-            if (Data.IsEmpty && !previousObject.Data.IsEmpty)
+            if (Data.IsEmpty && !previousFile.Data.IsEmpty)
                 return new FileRemovalObjectDelta();
 
-            if (Data.SequenceEqual(previousObject.Data))
+            if (Data.SequenceEqual(previousFile.Data))
                 return null;
 
             var deltaCurrentStart = 0;
@@ -59,8 +59,8 @@ namespace Backups.Models
             var deltaPreviousEnd = 0;
 
             while (deltaCurrentStart < Data.Length &&
-                   deltaPreviousStart < previousObject.Data.Length &&
-                   Data[deltaCurrentStart] == previousObject.Data[deltaPreviousStart])
+                   deltaPreviousStart < previousFile.Data.Length &&
+                   Data[deltaCurrentStart] == previousFile.Data[deltaPreviousStart])
             {
                 deltaCurrentStart++;
                 deltaPreviousStart++;
@@ -68,15 +68,15 @@ namespace Backups.Models
             
             if (deltaCurrentStart == Data.Length)
                 return new DeletionObjectDelta(deltaCurrentStart, 
-                    previousObject.Data.Length - deltaCurrentStart);
+                    previousFile.Data.Length - deltaCurrentStart);
             
-            if (deltaPreviousStart == previousObject.Data.Length)
+            if (deltaPreviousStart == previousFile.Data.Length)
                 return new AdditionObjectDelta(deltaPreviousStart, 
                     Data.TakeLast(Data.Length - deltaPreviousStart).ToArray());
 
             while (deltaCurrentEnd < Data.Length &&
-                   deltaPreviousEnd < previousObject.Data.Length &&
-                   Data[deltaCurrentEnd] != previousObject.Data[deltaPreviousEnd])
+                   deltaPreviousEnd < previousFile.Data.Length &&
+                   Data[deltaCurrentEnd] != previousFile.Data[deltaPreviousEnd])
             {
                 deltaCurrentEnd++;
                 deltaPreviousEnd++;

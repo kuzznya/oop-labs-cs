@@ -15,7 +15,7 @@ namespace Backups.Models.ObjectDelta
 
         public int Size => _addition.Length + 4;
 
-        public BackupObject Apply(BackupObject obj)
+        public BackupFile Apply(BackupFile obj)
         {
             var data = new byte[obj.Data.Length + _addition.Length];
 
@@ -29,7 +29,7 @@ namespace Backups.Models.ObjectDelta
             for (var i = _position + _addition.Length; i < data.Length; i++)
                 data[i] = obj.Data[i - _addition.Length];
             
-            return new BackupObject(obj.Path, data);
+            return new BackupFile(obj.Path, data);
         }
     }
 }

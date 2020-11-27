@@ -6,19 +6,19 @@ namespace Backups.Models
 {
     public class ObjectDiff
     {
-        public BackupObject BaseObject { get; }
+        public BackupFile BaseFile { get; }
         
         public List<IObjectDelta> Changes { get; }
 
-        public ObjectDiff(BackupObject baseObject, List<IObjectDelta> changes)
+        public ObjectDiff(BackupFile baseFile, List<IObjectDelta> changes)
         {
-            BaseObject = baseObject;
+            BaseFile = baseFile;
             Changes = changes;
         }
 
-        public BackupObject Apply()
+        public BackupFile Apply()
         {
-            return Changes.Aggregate(BaseObject,
+            return Changes.Aggregate(BaseFile,
                 (current, delta) => delta.Apply(current));
         }
     }

@@ -12,8 +12,8 @@ namespace Backups.Models.RestorePoint
         
         public DateTime CreationTime { get; }
 
-        public IReadOnlyList<BackupObject> SavedObjects => _previousPoint.SavedObjects
-            .Where(obj => _diffs.Find(diff => diff.BaseObject == obj) is null)
+        public IReadOnlyList<BackupFile> SavedObjects => _previousPoint.SavedObjects
+            .Where(obj => _diffs.Find(diff => diff.BaseFile == obj) is null)
             .Concat(_diffs.Select(diff => diff.Apply()))
             .ToImmutableList();
 
@@ -21,7 +21,7 @@ namespace Backups.Models.RestorePoint
 
         public IncrementalRestorePoint(
             IRestorePoint previousPoint, 
-            IEnumerable<BackupObject> objects, 
+            IEnumerable<BackupFile> objects, 
             DateTime creationTime)
         {
             _previousPoint = previousPoint;
@@ -33,7 +33,7 @@ namespace Backups.Models.RestorePoint
                 var prevObj = previousObjects.FirstOrDefault(o => o.Path == obj.Path);
                 _diffs.Add(prevObj != null
                     ? obj.CompareTo(prevObj)
-                    : obj.CompareTo(new BackupObject(obj.Path, new byte[0])));
+                    : obj.CompareTo(new BackupFile(obj.Path, new byte[0])));
             }
         }
         

@@ -4,9 +4,9 @@ namespace Backups.Models.ObjectDelta
     {
         public int Size => 0;
 
-        public BackupObject Apply(BackupObject obj)
+        public BackupFile Apply(BackupFile obj)
         {
-            return new BackupObject(obj.Path, new byte[0]);
+            return new BackupFile(obj.Path, new byte[0]);
         }
     }
 }

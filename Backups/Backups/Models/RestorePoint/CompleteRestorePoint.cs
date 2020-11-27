@@ -7,7 +7,7 @@ namespace Backups.Models.RestorePoint
     public class CompleteRestorePoint : IRestorePoint
     {
         public DateTime CreationTime { get; }
-        public IReadOnlyList<BackupObject> SavedObjects { get; }
+        public IReadOnlyList<BackupFile> SavedObjects { get; }
         public int Size => SavedObjects.Sum(obj => obj.Data.Length);
         public void Restore()
         {
@@ -15,7 +15,7 @@ namespace Backups.Models.RestorePoint
                 backupObject.Restore();
         }
 
-        public CompleteRestorePoint(DateTime creationTime, IReadOnlyList<BackupObject> objects)
+        public CompleteRestorePoint(DateTime creationTime, IReadOnlyList<BackupFile> objects)
         {
             CreationTime = creationTime;
             SavedObjects = objects;
